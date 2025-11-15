@@ -158,7 +158,6 @@ class LicenseRegistrationForm:
             '目的監理所': self.destination_station.get()
         }
         
-        # 驗證必填欄位
         if not data['姓名']:
             messagebox.showwarning("警告", "請輸入姓名")
             return
@@ -172,7 +171,6 @@ class LicenseRegistrationForm:
             messagebox.showwarning("警告", "請輸入身分證字號")
             return
             
-        # 顯示提交的資料
         message = "\n".join([f"{key}: {value}" for key, value in data.items()])
         messagebox.showinfo("表單提交成功", f"已提交以下資料:\n\n{message}")
 
@@ -195,7 +193,6 @@ class LicenseRegistrationForm:
             json.dump(save_data, f, ensure_ascii=False, indent=2)
 
     def clear_form(self):
-        # 清除所有輸入欄位
         self.name_entry.delete(0, tk.END)
         self.phone_entry.delete(0, tk.END)
         self.email_entry.delete(0, tk.END)
