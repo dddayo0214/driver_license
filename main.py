@@ -18,7 +18,7 @@ class LicenseRegistrationForm:
         self.root.title("駕照報名表單")
         self.root.geometry("500x650")
         self.root.resizable(False, False)
-        self.data_file = os.path.join("driver_license", "driver_data.json")
+        self.data_file = os.path.join("driver_license", "user_info.json")
         
         self.stations_data = {
             '臺北市區監理所（含金門馬祖）': ['士林監理站(臺北市士林區承德路5段80號)', '基隆監理站(基隆市七堵區實踐路296號)', '金門監理站(金門縣金湖鎮黃海路六之一號)', '連江監理站(連江縣南竿鄉津沙村155號)'],

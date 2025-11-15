@@ -1,0 +1,24 @@
+{
+  "form_data": {
+    "駕照類型": "普通重型機車",
+    "姓名": "DD",
+    "生日": "890101",
+    "電話": "0000000000",
+    "電子郵件": "0000@000000000",
+    "身分證字號": "F00000000",
+    "考試日期": "1140101",
+    "目的地區": "臺北市區監理所（含金門馬祖）",
+    "目的監理所": "士林監理站(臺北市士林區承德路5段80號)"
+  },
+  "form_state": {
+    "license_type_index": 0,
+    "birth_year": "2000",
+    "birth_month": "1",
+    "birth_day": "1",
+    "exam_year": "2025",
+    "exam_month": "1",
+    "exam_day": "1",
+    "destination_region_index": 0,
+    "destination_station_index": 0
+  }
+}
