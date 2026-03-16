@@ -1,12 +1,17 @@
 #coding = utf-8
 import os
 import json
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
 import tkinter as tk
 from tkinter import ttk
@@ -189,6 +194,7 @@ class LicenseRegistrationForm:
             }
         }
         
+        os.makedirs(os.path.dirname(self.data_file), exist_ok=True)
         with open(self.data_file, 'w', encoding='utf-8') as f:
             json.dump(save_data, f, ensure_ascii=False, indent=2)
 
@@ -216,6 +222,9 @@ class LicenseRegistrationForm:
         form_data = save_data.get('form_data', {})
         chrome_options = Options()
         chrome_options.add_experimental_option("detach", True)
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        chrome_options.add_experimental_option('useAutomationExtension', False)
         service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=chrome_options)
         driver.get('https://www.mvdis.gov.tw/m3-emv-trn/exm/locations#')
@@ -231,13 +240,26 @@ class LicenseRegistrationForm:
         
         date = driver.find_element(By.ID, 'expectExamDateStr')
         date.send_keys(form_data['考試日期'] + '\n')
-
+            
         search = driver.find_element(By.XPATH, '//*[@id="form1"]/div/a')
         search.click()
 
         move = driver.find_element(By.XPATH, '/html/body/div[11]/div/center/a[3]')
         move.click()
 
+        while True:
+            try:
+                WebDriverWait(driver, 5).until(
+                    EC.visibility_of_element_located((By.XPATH, '//*[@id="trnTable"]/tbody/tr'))
+                )
+                break
+            except TimeoutException:
+                print("等待超時，未找到報名表格，持續嘗試中。")
+                continue
+            except Exception as e:
+                print("發生錯誤:", e)
+                break    
+        
         texts = driver.find_element(By.XPATH, '//*[@id="trnTable"]/tbody')
         texts = texts.find_elements(By.TAG_NAME, 'tr')
         for i in range(len(texts)):
@@ -266,6 +288,8 @@ class LicenseRegistrationForm:
 
                 over = driver.find_element(By.XPATH, '//*[@id="form1"]/table/tbody/tr[6]/td/a[1]')
                 over.click()
+        else:
+            messagebox.showinfo("已額滿", f"{text[:10]} 考試日期已額滿，請稍後再試")
 
     def load_data(self):
         if not os.path.exists(self.data_file):
