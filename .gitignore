@@ -8,3 +8,21 @@ wheels/
 
 # Virtual environments
 .venv
+.uv-cache/
+
+# Local personal data and runtime logs
+user_info.json
+driver_license.log
+
+# Web version local state and dependencies
+web_version/backend/.data/
+web_version/backend/.venv/
+web_version/backend/.uv-cache/
+web_version/backend/.pytest_cache/
+web_version/backend/.test-tmp/
+web_version/backend/tests/.encrypted-test/
+web_version/frontend/node_modules/
+web_version/frontend/dist/
+web_version/frontend/*.tsbuildinfo
+web_version/.logs/
+web_version/.runtime/

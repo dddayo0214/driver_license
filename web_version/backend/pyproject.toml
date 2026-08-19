@@ -1,0 +1,18 @@
+[project]
+name = "driver-license-web-backend"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+  "cryptography>=46.0.0",
+  "fastapi>=0.116.0",
+  "pydantic[email]>=2.11.0",
+  "selenium>=4.38.0",
+  "uvicorn[standard]>=0.35.0",
+  "webdriver-manager>=4.0.2",
+]
+
+[dependency-groups]
+dev = ["httpx>=0.28.0", "pytest>=8.4.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
